@@ -42,6 +42,6 @@ public class IndexController {
             }
         }
         model.addAttribute("discussPosts", arrayList);
-        return "/pages/index";
+        return "index";
     }
 }

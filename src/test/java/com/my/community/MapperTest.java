@@ -17,8 +17,8 @@ import java.util.List;
 
 
 @SpringBootTest
-@ContextConfiguration(classes = CommunityApplication.class)
 @RunWith(SpringRunner.class)
+@ContextConfiguration(classes = CommunityApplication.class)
 public class MapperTest {
     @Autowired
     private UserMapper userMapper;
