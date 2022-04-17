@@ -10,18 +10,18 @@ public class UserServiceImpl implements IUserService {
     UserMapper userMapper;
 
     @Override
-    public User findById(int id) {
-        return userMapper.findById(id);
+    public User findUserById(int id) {
+        return userMapper.findUserById(id);
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userMapper.findByUsername(username);
+    public User findUserByUsername(String username) {
+        return userMapper.findUserByUsername(username);
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userMapper.findByEmail(email);
+    public User findUserByEmail(String email) {
+        return userMapper.findUserByEmail(email);
     }
 
     @Override

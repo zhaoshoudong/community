@@ -20,15 +20,15 @@
         update user set header_url = #{headerUrl} where id = #{id}
     </update>
 
-    <select id="findById" resultType="User">
+    <select id="findUserById" resultType="User">
         select <include refid="selectFiles"></include>
         from user where id = #{id}
     </select>
-    <select id="findByUsername" resultType="User">
+    <select id="findUserByUsername" resultType="User">
         select <include refid="selectFiles"></include>
         from user where username = #{username}
     </select>
-    <select id="findByEmail" resultType="User">
+    <select id="findUserByEmail" resultType="User">
         select <include refid="selectFiles"></include>
         from user where email = #{email}
     </select>

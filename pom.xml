@@ -50,6 +50,13 @@
 			<artifactId>HikariCP</artifactId>
 			<version>3.3.1</version>
 		</dependency>
+<!--		commons-lang字符串扩展包-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+		</dependency>
+
 
 
 		<dependency>

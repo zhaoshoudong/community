@@ -27,14 +27,14 @@ public class MapperTest {
     //UserMapper 用户接口测试
     @Test
     public void testSelectUser(){
-        User user = userMapper.findById(101);
+        User user = userMapper.findUserById(101);
         System.out.println("按id查找");
         System.out.println(user);
         System.out.println("按姓名查找");
-        User liubei = userMapper.findByUsername("liubei");
+        User liubei = userMapper.findUserByUsername("liubei");
         System.out.println(liubei);
         System.out.println("按email查找");
-        User user1 = userMapper.findByEmail("nowcoder101@sina.com");
+        User user1 = userMapper.findUserByEmail("nowcoder101@sina.com");
         System.out.println(user1);
     }
 

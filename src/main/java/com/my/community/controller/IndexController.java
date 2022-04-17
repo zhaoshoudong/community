@@ -35,7 +35,7 @@ public class IndexController {
             for (DiscussPost post : list
             ) {
                 Map<String, Object> hashMap = new HashMap<>();
-                User user = userMapper.findById(Integer.parseInt(post.getUserId()));
+                User user = userMapper.findUserById(Integer.parseInt(post.getUserId()));
                 hashMap.put("user", user);
                 hashMap.put("post", post);
                 arrayList.add(hashMap);
