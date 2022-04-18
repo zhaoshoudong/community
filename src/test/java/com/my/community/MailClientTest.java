@@ -21,7 +21,7 @@ public class MailClientTest {
     //发送邮件
     @Test
     public void testMail(){
-        mailClient.sendMail("649035198@qq.com","妹妹","猜猜我是谁？");
+        mailClient.sendMail("2509434424@qq.com","test","Hello");
     }
     //利用 TemplateEngine 生成Html;发送HTML邮件
     @Test
