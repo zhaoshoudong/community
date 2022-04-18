@@ -1,8 +1,12 @@
 package com.my.community.controller;
 
+import com.google.code.kaptcha.Producer;
+import com.my.community.config.KaptChaConfig;
 import com.my.community.entity.User;
 import com.my.community.service.serviceimpl.UserServiceImpl;
 import com.my.community.util.CommunityConstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +14,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Map;
 
 @Controller
 public class LoginController implements CommunityConstant {
 
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private Producer kaptChaProducer;
 
     @RequestMapping(path = "/register", method = RequestMethod.GET)
     public String getRegisterPage() {
@@ -50,7 +67,22 @@ public class LoginController implements CommunityConstant {
 
     }
 
-
+    @RequestMapping(path = "/kaptCha",method = RequestMethod.GET)
+    public void getKaptCha(HttpServletResponse response, HttpSession session){
+        //生成验证码
+        String text = kaptChaProducer.createText();
+        BufferedImage image = kaptChaProducer.createImage(text);
+        //将验证码存入session中
+        session.setAttribute("kaptCha",text);
+        //将图片直接输出给浏览器
+        response.setContentType("image/png");
+        try {
+            OutputStream os= response.getOutputStream();
+            ImageIO.write(image,"png",os);
+        } catch (IOException e) {
+            log.error("响应验证码失败:"+e.getMessage());
+        }
+    }
 
     /**
      * 验证邮箱发送的验证码
