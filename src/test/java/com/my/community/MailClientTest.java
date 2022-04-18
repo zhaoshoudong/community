@@ -18,12 +18,18 @@ public class MailClientTest {
     MailClient mailClient;
     @Autowired
     TemplateEngine templateEngine;
-    //发送邮件
+
+    /**
+     * 发送邮件
+     */
     @Test
     public void testMail(){
         mailClient.sendMail("2509434424@qq.com","test","Hello");
     }
-    //利用 TemplateEngine 生成Html;发送HTML邮件
+
+    /**
+     * 利用 TemplateEngine 生成Html;发送HTML邮件
+     */
     @Test
     public void testHtml(){
         Context context = new Context();

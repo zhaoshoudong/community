@@ -1,8 +1,10 @@
 package com.my.community;
 
 import com.my.community.Dao.DiscussPostMapper;
+import com.my.community.Dao.LoginTicketMapper;
 import com.my.community.Dao.UserMapper;
 import com.my.community.entity.DiscussPost;
+import com.my.community.entity.LoginTicket;
 import com.my.community.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,9 +26,14 @@ public class MapperTest {
     private UserMapper userMapper;
     @Autowired
     private DiscussPostMapper discussPostMapper;
-    //UserMapper 用户接口测试
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
+
+    /**
+     * UserMapper 用户接口测试
+     */
     @Test
-    public void testSelectUser(){
+    public void testSelectUser() {
         User user = userMapper.findUserById(101);
         System.out.println("按id查找");
         System.out.println(user);
@@ -38,8 +45,11 @@ public class MapperTest {
         System.out.println(user1);
     }
 
+    /**
+     * 测试插入用户
+     */
     @Test
-    public void testInsetUser(){
+    public void testInsetUser() {
         System.out.println("插入用户");
         User user2 = new User();
         user2.setUsername("刘能");
@@ -55,8 +65,11 @@ public class MapperTest {
         System.out.println(i);
     }
 
+    /**
+     * 修改用户头像及状态
+     */
     @Test
-    public void testUpdateUser(){
+    public void testUpdateUser() {
         int i = userMapper.updateHeader(150, "http://images.nowcoder.com/head/180t.png");
         System.out.println(i);
 
@@ -64,16 +77,56 @@ public class MapperTest {
         System.out.println(i1);
     }
 
-    // DiscussPostMapper文章接口测试
+    /**
+     * DiscussPostMapper文章接口测试
+     */
     @Test
-    public void testDiscussPost(){
+    public void testDiscussPost() {
         List<DiscussPost> discussPosts = discussPostMapper.findDiscussPosts(149, 0, 10);
-        for (DiscussPost myList:discussPosts
-             ) {
+        for (DiscussPost myList : discussPosts
+        ) {
             System.out.println(myList);
         }
         int rows = discussPostMapper.findDiscussPostRows(149);
         System.out.println(rows);
 
+    }
+
+    /**
+     * 测试插入loginTicket凭证
+     */
+    @Test
+    public void testLoginTicket() {
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(101);
+        loginTicket.setTicket("abc");
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + 1000 * 60 * 10));
+        int i = loginTicketMapper.insertTicket(loginTicket);
+        System.out.println(i);
+        System.out.println(loginTicket);
+    }
+
+    /**
+     * 测试根据ticke字段查询loginTicket表
+     */
+    @Test
+    public void testSelectTicket(){
+        LoginTicket loginTicket = loginTicketMapper.findByTicket("abc");
+        System.out.println(loginTicket);
+    }
+
+    /**
+     * 测试根据ticket字段查询LoginTicket表
+     * 测试根据ticket字段修稿LoginTicket表
+     */
+    @Test
+    public void testUpdateTicket(){
+        LoginTicket loginTicket = loginTicketMapper.findByTicket("abc");
+        System.out.println(loginTicket);
+        int def = loginTicketMapper.updateStatusByTicket("abc",0);
+        System.out.println(def);
+        loginTicket = loginTicketMapper.findByTicket("abc");
+        System.out.println(loginTicket);
     }
 }
