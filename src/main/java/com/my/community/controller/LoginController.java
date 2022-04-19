@@ -1,7 +1,6 @@
 package com.my.community.controller;
 
 import com.google.code.kaptcha.Producer;
-import com.my.community.config.KaptChaConfig;
 import com.my.community.entity.User;
 import com.my.community.service.serviceimpl.UserServiceImpl;
 import com.my.community.util.CommunityConstant;
@@ -15,13 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Map;
 
 @Controller
