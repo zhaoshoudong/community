@@ -94,6 +94,7 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
 
     /**
      * 通过发送给用户邮件的链接激活帐号
+     *
      * @param userId
      * @param code
      * @return
@@ -103,7 +104,7 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
         if (user.getStatus() == 1) {
             return ACTIVATION_REPEAT;
         } else if (user.getActivationCode().equals(code)) {
-            userMapper.updateStatus(userId,1);
+            userMapper.updateStatus(userId, 1);
             return ACTIVATION_SUCCESS;
         } else {
             return ACTIVATION_FAILURE;
@@ -152,17 +153,18 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
         //过期时间,当前系统时间 + expiredSeconds 秒
         loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
         int i = loginTicketMapper.insertTicket(loginTicket);
-        map.put("ticket",loginTicket.getTicket());
+        map.put("ticket", loginTicket.getTicket());
         return map;
     }
 
     /**
      * 退出登录
+     *
      * @param ticket
      */
     @Override
     public void logout(String ticket) {
-        loginTicketMapper.updateStatusByTicket(ticket,1);
+        loginTicketMapper.updateStatusByTicket(ticket, 1);
     }
 
 

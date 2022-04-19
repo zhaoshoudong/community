@@ -16,7 +16,7 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
 
     @Override
     public List<DiscussPost> findDiscussPosts(int userId, int offset, int limit) {
-        return discussPostMapper.findDiscussPosts(userId,offset,limit);
+        return discussPostMapper.findDiscussPosts(userId, offset, limit);
     }
 
     @Override

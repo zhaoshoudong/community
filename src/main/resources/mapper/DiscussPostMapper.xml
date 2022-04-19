@@ -19,7 +19,7 @@
     </select>
     <select id="findDiscussPostRows" resultType="int">
         select
-            count(id)
+        count(id)
         from
         discuss_post
         where status!=2

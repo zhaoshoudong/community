@@ -23,19 +23,19 @@ public class MailClientTest {
      * 发送邮件
      */
     @Test
-    public void testMail(){
-        mailClient.sendMail("2509434424@qq.com","test","Hello");
+    public void testMail() {
+        mailClient.sendMail("2509434424@qq.com", "test", "Hello");
     }
 
     /**
      * 利用 TemplateEngine 生成Html;发送HTML邮件
      */
     @Test
-    public void testHtml(){
+    public void testHtml() {
         Context context = new Context();
-        context.setVariable("username","Sunday");
+        context.setVariable("username", "Sunday");
         String process = templateEngine.process("/mail/activation", context);
-        mailClient.sendMail("2509434424@qq.com","HTML",context.toString());
+        mailClient.sendMail("2509434424@qq.com", "HTML", context.toString());
         System.out.println(process);
     }
 }

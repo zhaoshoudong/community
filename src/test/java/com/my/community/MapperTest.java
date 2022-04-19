@@ -110,7 +110,7 @@ public class MapperTest {
      * 测试根据ticke字段查询loginTicket表
      */
     @Test
-    public void testSelectTicket(){
+    public void testSelectTicket() {
         LoginTicket loginTicket = loginTicketMapper.findByTicket("abc");
         System.out.println(loginTicket);
     }
@@ -120,10 +120,10 @@ public class MapperTest {
      * 测试根据ticket字段修稿LoginTicket表
      */
     @Test
-    public void testUpdateTicket(){
+    public void testUpdateTicket() {
         LoginTicket loginTicket = loginTicketMapper.findByTicket("abc");
         System.out.println(loginTicket);
-        int def = loginTicketMapper.updateStatusByTicket("abc",0);
+        int def = loginTicketMapper.updateStatusByTicket("abc", 0);
         System.out.println(def);
         loginTicket = loginTicketMapper.findByTicket("abc");
         System.out.println(loginTicket);

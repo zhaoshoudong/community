@@ -3,33 +3,43 @@
 <mapper namespace="com.my.community.Dao.UserMapper">
 
     <sql id="selectFiles">
-        id,username, password, salt, email, type, status, activation_code, header_url, create_time
+        id
+        ,username, password, salt, email, type, status, activation_code, header_url, create_time
     </sql>
     <sql id="insertFiles">
-        username, password, salt, email, type, status, activation_code, header_url, create_time
+        username
+        , password, salt, email, type, status, activation_code, header_url, create_time
     </sql>
 
     <insert id="insertUser" parameterType="User">
         insert into user (<include refid="insertFiles"></include>)
-            values (#{username}, #{password}, #{salt}, #{email}, #{type}, #{status}, #{activationCode}, #{headerUrl}, #{createTime})
+        values (#{username}, #{password}, #{salt}, #{email}, #{type}, #{status}, #{activationCode}, #{headerUrl},
+        #{createTime})
     </insert>
     <update id="updateStatus">
-        update user set status = #{status} where id = #{id}
+        update user
+        set status = #{status}
+        where id = #{id}
     </update>
     <update id="updateHeader">
-        update user set header_url = #{headerUrl} where id = #{id}
+        update user
+        set header_url = #{headerUrl}
+        where id = #{id}
     </update>
 
     <select id="findUserById" resultType="User">
-        select <include refid="selectFiles"></include>
+        select
+        <include refid="selectFiles"></include>
         from user where id = #{id}
     </select>
     <select id="findUserByUsername" resultType="User">
-        select <include refid="selectFiles"></include>
+        select
+        <include refid="selectFiles"></include>
         from user where username = #{username}
     </select>
     <select id="findUserByEmail" resultType="User">
-        select <include refid="selectFiles"></include>
+        select
+        <include refid="selectFiles"></include>
         from user where email = #{email}
     </select>
 

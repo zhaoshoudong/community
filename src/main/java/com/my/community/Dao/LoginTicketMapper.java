@@ -13,5 +13,5 @@ public interface LoginTicketMapper {
     LoginTicket findByTicket(String ticket);
 
     @Update("update login_ticket set status = #{status} where ticket = #{ticket}")
-    int updateStatusByTicket(String ticket,int status);
+    int updateStatusByTicket(String ticket, int status);
 }

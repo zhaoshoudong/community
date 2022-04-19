@@ -72,6 +72,12 @@ public class LoginController implements CommunityConstant {
 
     }
 
+    /**
+     * 将生成的验证码存到session中(验证用户登录时,从session中获取验证码进行比对)
+     *
+     * @param response
+     * @param session
+     */
     @RequestMapping(path = "/kaptCha", method = RequestMethod.GET)
     public void getKaptCha(HttpServletResponse response, HttpSession session) {
         //生成验证码
