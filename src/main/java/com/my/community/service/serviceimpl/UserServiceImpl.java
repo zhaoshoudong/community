@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -33,7 +32,7 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
     @Autowired
     LoginTicketMapper loginTicketMapper;
     @Value("${community.path.domin}")
-    private String domin;
+    private String doMin;
     @Value("server.servlet.context-path")
     private String contextPath;
 
@@ -75,30 +74,36 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
         //注册用户
         String salt = MD5Util.generateUUID().substring(0, 5);
         user.setSalt(salt);
-        user.setPassword(MD5Util.md5(user.getPassword() + salt));
+        user.setPassword(MD5Util.md5(user.getPassword() + user.getSalt()));
         user.setType(0);
         user.setStatus(0);
         user.setActivationCode(MD5Util.generateUUID());
-        // http://localhost:8080/community/activation/101/code
         user.setHeaderUrl(String.format("http://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000)));
         user.setCreateTime(new Date());
         userMapper.insertUser(user);
         //发送激活邮件
         Context context = new Context();
         context.setVariable("email", user.getEmail());
-        String url = domin + contextPath + "/activation/" + user.getId() + "/" + user.getActivationCode();
+        // http://localhost:8080/community/activation/101/code
+        String url = doMin + contextPath + "/activation/" + user.getId() + "/" + user.getActivationCode();
         context.setVariable("url", url);
         String content = templateEngine.process("/mail/activation", context);
         mailClient.sendMail(user.getEmail(), "激活帐号", content);
         return map;
     }
 
-    @RequestMapping("/actication")
+    /**
+     * 通过发送给用户邮件的链接激活帐号
+     * @param userId
+     * @param code
+     * @return
+     */
     public int activation(int userId, String code) {
         User user = userMapper.findUserById(userId);
         if (user.getStatus() == 1) {
             return ACTIVATION_REPEAT;
         } else if (user.getActivationCode().equals(code)) {
+            userMapper.updateStatus(userId,1);
             return ACTIVATION_SUCCESS;
         } else {
             return ACTIVATION_FAILURE;
@@ -149,6 +154,15 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
         int i = loginTicketMapper.insertTicket(loginTicket);
         map.put("ticket",loginTicket.getTicket());
         return map;
+    }
+
+    /**
+     * 退出登录
+     * @param ticket
+     */
+    @Override
+    public void logout(String ticket) {
+        loginTicketMapper.updateStatusByTicket(ticket,1);
     }
 
 

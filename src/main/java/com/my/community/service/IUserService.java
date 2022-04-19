@@ -13,5 +13,6 @@ public interface IUserService {
     int updateHeader(int id,String headerUrl);
     Map<String ,Object> register(User user);
     Map<String,Object> login(String username,String password,int expiredSeconds);
+    void logout(String ticket);
 
 }
