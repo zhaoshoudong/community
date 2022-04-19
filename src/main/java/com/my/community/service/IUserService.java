@@ -1,9 +1,9 @@
 package com.my.community.service;
 
 import com.my.community.entity.User;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Map;
+
 public interface IUserService {
     User findUserById(int id);
     User findUserByUsername(String username);
@@ -11,5 +11,7 @@ public interface IUserService {
     int insertUser(User user);
     int updateStatus(int id,int status);
     int updateHeader(int id,String headerUrl);
+    Map<String ,Object> register(User user);
+    Map<String,Object> login(String username,String password,int expiredSeconds);
 
 }

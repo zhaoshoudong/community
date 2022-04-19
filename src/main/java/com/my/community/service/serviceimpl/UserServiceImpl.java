@@ -1,6 +1,8 @@
 package com.my.community.service.serviceimpl;
 
+import com.my.community.Dao.LoginTicketMapper;
 import com.my.community.Dao.UserMapper;
+import com.my.community.entity.LoginTicket;
 import com.my.community.entity.User;
 import com.my.community.service.IUserService;
 import com.my.community.util.CommunityConstant;
@@ -28,6 +30,8 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
     private TemplateEngine templateEngine;
     @Autowired
     private MailClient mailClient;
+    @Autowired
+    LoginTicketMapper loginTicketMapper;
     @Value("${community.path.domin}")
     private String domin;
     @Value("server.servlet.context-path")
@@ -38,6 +42,7 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
      *
      * @return
      */
+    @Override
     public Map<String, Object> register(User user) {
         HashMap<String, Object> map = new HashMap<>();
         if (user == null) {
@@ -88,7 +93,6 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
         return map;
     }
 
-
     @RequestMapping("/actication")
     public int activation(int userId, String code) {
         User user = userMapper.findUserById(userId);
@@ -100,6 +104,53 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
             return ACTIVATION_FAILURE;
         }
     }
+
+    /**
+     * 登录
+     *
+     * @param username
+     * @param password
+     * @param expiredSeconds
+     * @return
+     */
+    @Override
+    public Map<String, Object> login(String username, String password, int expiredSeconds) {
+        Map<String, Object> map = new HashMap<>();
+        if (StringUtils.isBlank(username)) {
+            map.put("usernameMsg", "用户名不能为空!");
+            return map;
+        }
+        if (StringUtils.isBlank(password)) {
+            map.put("passwordMsg", "密码不能为空!");
+            return map;
+        }
+        User user = userMapper.findUserByUsername(username);
+        if (user == null) {
+            map.put("usernameMsg", "该用户未注册!");
+            return map;
+        }
+        if (user.getStatus() == 0) {
+            map.put("usernameMsg", "该账号未激活!");
+            return map;
+        }
+        //验证密码
+        password = MD5Util.md5(password + user.getSalt());
+        if (!user.getPassword().equals(password)) {
+            map.put("passwordMsg", "密码错误!");
+            return map;
+        }
+        //生成登陆凭证
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(user.getId());
+        loginTicket.setTicket(MD5Util.generateUUID());
+        loginTicket.setStatus(0);
+        //过期时间,当前系统时间 + expiredSeconds 秒
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
+        int i = loginTicketMapper.insertTicket(loginTicket);
+        map.put("ticket",loginTicket.getTicket());
+        return map;
+    }
+
 
     @Override
     public User findUserById(int id) {
@@ -130,5 +181,6 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
     public int updateHeader(int id, String headerUrl) {
         return userMapper.updateHeader(id, headerUrl);
     }
+
 
 }
