@@ -1,5 +1,6 @@
 package com.my.community.controller;
 
+import com.my.community.annotation.LoginRequired;
 import com.my.community.entity.User;
 import com.my.community.service.serviceimpl.UserServiceImpl;
 import com.my.community.util.HostHolder;
@@ -34,13 +35,15 @@ public class UserController {
     @Value("${community.path.upload}")
     private String uploadPath;
 
+    @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
     public String getSettingPage() {
         return "/site/setting";
     }
 
+    @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
-        public String uploadHeader(MultipartFile headerImage, Model model) {
+    public String uploadHeader(MultipartFile headerImage, Model model) {
         if (headerImage == null) {
             model.addAttribute("error", "您还没有选择图片!");
             return "/site/setting";
@@ -75,7 +78,7 @@ public class UserController {
     @RequestMapping(path = "/header/{fileName}", method = RequestMethod.GET)
     public void getHeader(@PathVariable("fileName") String fileName, HttpServletResponse response) {
         fileName = uploadPath + "/" + fileName;
-        String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
         response.setContentType("image/" + suffix);
         FileInputStream fileInputStream = null;
         try {
@@ -87,13 +90,12 @@ public class UserController {
             OutputStream outputStream = response.getOutputStream();
             byte[] bytes = new byte[1024];
             int count = 0;
-            while ((count = fileInputStream.read(bytes))!=-1)
-            {
-                outputStream.write(bytes,0,count);
+            while ((count = fileInputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, count);
             }
         } catch (IOException e) {
             log.error("读取头像失败:" + e.getMessage());
-        }finally {
+        } finally {
             try {
                 fileInputStream.close();
             } catch (IOException e) {
