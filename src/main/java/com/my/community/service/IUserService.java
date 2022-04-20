@@ -1,5 +1,6 @@
 package com.my.community.service;
 
+import com.my.community.entity.LoginTicket;
 import com.my.community.entity.User;
 
 import java.util.Map;
@@ -22,5 +23,7 @@ public interface IUserService {
     Map<String, Object> login(String username, String password, long expiredSeconds);
 
     void logout(String ticket);
+
+    LoginTicket findLoginTicket(String ticket);
 
 }
