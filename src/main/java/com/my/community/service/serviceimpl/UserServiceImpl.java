@@ -120,7 +120,7 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
      * @return
      */
     @Override
-    public Map<String, Object> login(String username, String password, int expiredSeconds) {
+    public Map<String, Object> login(String username, String password, long expiredSeconds) {
         Map<String, Object> map = new HashMap<>();
         if (StringUtils.isBlank(username)) {
             map.put("usernameMsg", "用户名不能为空!");
@@ -152,7 +152,7 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
         loginTicket.setStatus(0);
         //过期时间,当前系统时间 + expiredSeconds 秒
         loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
-        int i = loginTicketMapper.insertTicket(loginTicket);
+        loginTicketMapper.insertTicket(loginTicket);
         map.put("ticket", loginTicket.getTicket());
         return map;
     }

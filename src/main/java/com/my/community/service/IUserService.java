@@ -19,7 +19,7 @@ public interface IUserService {
 
     Map<String, Object> register(User user);
 
-    Map<String, Object> login(String username, String password, int expiredSeconds);
+    Map<String, Object> login(String username, String password, long expiredSeconds);
 
     void logout(String ticket);
 
