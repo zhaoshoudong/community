@@ -167,6 +167,16 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
         loginTicketMapper.updateStatusByTicket(ticket, 1);
     }
 
+    /**
+     * 在拦截器中,拦截用户登陆时的请求,根据登陆时生成的 loginTicket 获取到用户数据(在 LoginTicketInterceptor 中用)
+     *
+     * @param ticket
+     * @return
+     */
+    public LoginTicket findLoginTicket(String ticket) {
+        return loginTicketMapper.findByTicket(ticket);
+    }
+
 
     @Override
     public User findUserById(int id) {
