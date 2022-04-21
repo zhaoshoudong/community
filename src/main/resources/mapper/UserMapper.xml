@@ -27,7 +27,9 @@
         where id = #{id}
     </update>
     <update id="updatePassword">
-        update user set password = #{newPassword} where id = #{id}
+        update user
+        set password = #{newPassword}
+        where id = #{id}
     </update>
 
     <select id="findUserById" resultType="User">
