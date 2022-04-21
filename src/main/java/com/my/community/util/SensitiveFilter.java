@@ -39,7 +39,7 @@ public class SensitiveFilter {
         }
     }
 
-    // 将文件中的字符 添加到 TrieNode 数据结构中
+    // 将 sensitive 文件中的字符 添加到 TrieNode 数据结构中
     private void addKeyWord(String keyWord) {
         TrieNode tempNode = rootNode;
         for (int i = 0; i < keyWord.length(); i++) {
