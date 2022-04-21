@@ -20,6 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
+/**
+ * 个人设置接口
+ *
+ * @return
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -41,6 +46,13 @@ public class UserController {
         return "/site/setting";
     }
 
+    /**
+     * 上传头像
+     *
+     * @param headerImage
+     * @param model
+     * @return
+     */
     @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model) {
@@ -75,6 +87,12 @@ public class UserController {
         return "redirect:/index";
     }
 
+    /**
+     * 获取头像
+     *
+     * @param fileName
+     * @param response
+     */
     @RequestMapping(path = "/header/{fileName}", method = RequestMethod.GET)
     public void getHeader(@PathVariable("fileName") String fileName, HttpServletResponse response) {
         fileName = uploadPath + "/" + fileName;
@@ -102,5 +120,41 @@ public class UserController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @RequestMapping(path = "/updatePassword", method = RequestMethod.POST)
+    public String updatePassword(String oldPassword, String newPassword, String reNewPassword, Model model) {
+        //获取当前用户
+        User user = hostHolder.getUser();
+
+        //前端传过来的用户输入的原密码
+        String oldPass = MD5Util.md5(oldPassword + user.getSalt());
+        //判断原密码是否一致
+        if (!user.getPassword().equals(oldPass)) {
+            model.addAttribute("PasswordError", "原密码不正确!");
+            return "/site/setting";
+        }
+        //判断新密码长度
+        if (newPassword.length() < 6) {
+            model.addAttribute("PasswordLengthError", "密码不能少于六位!");
+            return "/site/setting";
+        }
+
+        //判断两次密码输入是否一致
+        if (!newPassword.equals(reNewPassword)) {
+            model.addAttribute("RepeatPasswordError", "两次输入的密码不一致!");
+
+            return "/site/setting";
+        }
+
+        //判断新密码是否与原密码一致
+        String s = MD5Util.md5(reNewPassword + user.getSalt());
+        if (user.getPassword().equals(s)) {
+            model.addAttribute("NewPasswordError", "新密码不能与原密码一致!");
+            return "/site/setting";
+        }
+        String newPass = MD5Util.md5(reNewPassword + user.getSalt());
+        userService.updatePassword(user.getId(), newPass);
+        return "redirect:/login";
     }
 }

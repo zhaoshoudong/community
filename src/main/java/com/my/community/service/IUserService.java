@@ -26,4 +26,6 @@ public interface IUserService {
 
     LoginTicket findLoginTicket(String ticket);
 
+    int updatePassword(int id,String newPassword);
+
 }

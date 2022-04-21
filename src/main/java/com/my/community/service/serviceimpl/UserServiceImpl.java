@@ -177,6 +177,11 @@ public class UserServiceImpl implements IUserService, CommunityConstant {
         return loginTicketMapper.findByTicket(ticket);
     }
 
+    @Override
+    public int updatePassword(int id,String newPassword) {
+        return userMapper.updatePassword(id, newPassword);
+    }
+
 
     @Override
     public User findUserById(int id) {
