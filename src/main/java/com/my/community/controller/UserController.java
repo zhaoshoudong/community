@@ -143,7 +143,6 @@ public class UserController {
         //判断两次密码输入是否一致
         if (!newPassword.equals(reNewPassword)) {
             model.addAttribute("RepeatPasswordError", "两次输入的密码不一致!");
-
             return "/site/setting";
         }
 
