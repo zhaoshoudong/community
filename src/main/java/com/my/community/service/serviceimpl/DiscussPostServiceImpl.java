@@ -3,8 +3,10 @@ package com.my.community.service.serviceimpl;
 import com.my.community.Dao.DiscussPostMapper;
 import com.my.community.entity.DiscussPost;
 import com.my.community.service.IDiscussPostService;
+import com.my.community.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -13,6 +15,8 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
 
     @Autowired
     DiscussPostMapper discussPostMapper;
+    @Autowired
+    SensitiveFilter sensitiveFilter;
 
     @Override
     public List<DiscussPost> findDiscussPosts(int userId, int offset, int limit) {
@@ -22,5 +26,21 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
     @Override
     public int findDiscussPostRows(int userId) {
         return discussPostMapper.findDiscussPostRows(userId);
+    }
+
+    @Override
+    public int addDiscussPost(DiscussPost discussPost) {
+        if (discussPost == null) {
+            throw new IllegalArgumentException("文章信息不能为空!");
+        }
+        //转义 html 标签
+        discussPost.setTitle(HtmlUtils.htmlEscape(discussPost.getTitle()));
+        discussPost.setContent(HtmlUtils.htmlEscape(discussPost.getContent()));
+        //过滤敏感词
+        String title = sensitiveFilter.filter(discussPost.getTitle());
+        String content = sensitiveFilter.filter(discussPost.getContent());
+        discussPost.setTitle(title);
+        discussPost.setContent(content);
+        return discussPostMapper.addDiscussPost(discussPost);
     }
 }

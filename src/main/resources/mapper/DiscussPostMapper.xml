@@ -5,6 +5,10 @@
         id
         , user_id, title, content, type, status, create_time, comment_count, score
     </sql>
+    <insert id="addDiscussPost">
+        insert into discuss_post (<include refid="selectDiscuss"/>)
+        values (null, #{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score})
+    </insert>
     <select id="findDiscussPosts" resultType="DiscussPost">
         select
         <include refid="selectDiscuss"></include>
