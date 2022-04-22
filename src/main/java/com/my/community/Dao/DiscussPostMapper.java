@@ -17,4 +17,6 @@ public interface DiscussPostMapper {
     int findDiscussPostRows(@Param("userId") int userId);
 
     int addDiscussPost(DiscussPost discussPost);
+
+    DiscussPost findDetailPost(int id);
 }

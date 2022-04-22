@@ -11,7 +11,7 @@
         , password, salt, email, type, status, activation_code, header_url, create_time
     </sql>
 
-    <insert id="insertUser" parameterType="User">
+    <insert id="insertUser" parameterType="User" keyProperty="id">
         insert into user (<include refid="insertFiles"></include>)
         values (#{username}, #{password}, #{salt}, #{email}, #{type}, #{status}, #{activationCode}, #{headerUrl},
         #{createTime})

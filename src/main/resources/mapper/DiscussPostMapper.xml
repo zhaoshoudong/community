@@ -31,4 +31,9 @@
             and user_id = #{userId}
         </if>
     </select>
+    <select id="findDetailPost" resultType="DiscussPost">
+        select
+        <include refid="selectDiscuss"/>
+        from discuss_post where id = #{id}
+    </select>
 </mapper>
