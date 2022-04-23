@@ -2,7 +2,6 @@ package com.my.community.service.serviceimpl;
 
 import com.my.community.Dao.DiscussPostMapper;
 import com.my.community.entity.DiscussPost;
-import com.my.community.entity.User;
 import com.my.community.service.IDiscussPostService;
 import com.my.community.util.HostHolder;
 import com.my.community.util.SensitiveFilter;
