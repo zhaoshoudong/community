@@ -33,6 +33,7 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
 
     /**
      * 发布文章
+     *
      * @param discussPost
      * @return
      */
@@ -54,12 +55,25 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
 
     /**
      * 根据帖子id查询帖子的详细信息
+     *
      * @param id
      * @return
      */
     @Override
     public DiscussPost findDetailPost(int id) {
         return discussPostMapper.findDetailPost(id);
+    }
+
+    /**
+     * 添加回贴时,同时要修改回帖总数
+     *
+     * @param id
+     * @param commentCount
+     * @return
+     */
+    @Override
+    public int updateCommentCount(int id, int commentCount) {
+        return discussPostMapper.updateCommentCount(id, commentCount);
     }
 
 }

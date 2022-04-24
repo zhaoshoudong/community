@@ -104,14 +104,14 @@ public class DiscussPostController implements CommunityConstant {
                         replyVoList.add(replyVo);
                     }
                 }
-                    commentVo.put("replys", replyVoList);
+                commentVo.put("replys", replyVoList);
                 // 回复数量
                 int replyCount = commentService.findCommentCount(ENTITY_TYPE_COMMENT, comment.getId());
                 commentVo.put("replyCount", replyCount);
                 commentVoList.add(commentVo);
             }
         }
-        model.addAttribute("comments",commentVoList);
+        model.addAttribute("comments", commentVoList);
         return "/site/discuss-detail";
     }
 }
