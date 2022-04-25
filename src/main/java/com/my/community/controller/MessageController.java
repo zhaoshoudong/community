@@ -75,19 +75,17 @@ public class MessageController {
             letters.add(hashMap);
         }
         model.addAttribute("letters", letters);
-        model.addAttribute("target",getLetterTarget(conversationId));
+        model.addAttribute("target", getLetterTarget(conversationId));
         return "/site/letter-detail";
     }
 
-    private User getLetterTarget(String conversation)
-    {
+    private User getLetterTarget(String conversation) {
         String[] split = conversation.split("_");
         int id0 = Integer.parseInt(split[0]);
         int id1 = Integer.parseInt(split[1]);
-        if (hostHolder.getUser().getId() == id0)
-        {
+        if (hostHolder.getUser().getId() == id0) {
             return userService.findUserById(id1);
-        }else {
+        } else {
             return userService.findUserById(id0);
         }
     }
