@@ -72,8 +72,8 @@
                 <ul class="nav nav-tabs mb-3">
                     <li class="nav-item">
                         <a class="nav-link position-relative active" th:href="@{/message/letter/list}">
-                            朋友私信<span class="badge badge-danger" th:text="${unreadLetterCount}"
-                                      th:if="${unreadLetterCount!=0}">3</span></a>
+                            朋友私信<span class="badge badge-danger" th:text="${unreadLetterCount}" th:if="${unreadLetterCount!=0}">3</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="notice.html">系统通知<span
@@ -99,11 +99,11 @@
                             <form>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label">发给：</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <input type="text" class="form-control" id="recipient-name" name="toName">
                                 </div>
                                 <div class="form-group">
                                     <label for="message-text" class="col-form-label">内容：</label>
-                                    <textarea class="form-control" id="message-text" rows="10"></textarea>
+                                    <textarea class="form-control" id="message-text" name="content" rows="10"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -143,7 +143,8 @@
                                   th:text="${#dates.format(map.conversation.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-28 14:13:25</span>
                         </h6>
                         <div>
-                            <a th:href="@{|/message/letter/detail/${map.conversation.conversationId}|}" th:utext="${map.conversation.content}">米粉车, 你来吧!</a>
+                            <a th:href="@{|/message/letter/detail/${map.conversation.conversationId}|}"
+                               th:utext="${map.conversation.content}">米粉车, 你来吧!</a>
                             <ul class="d-inline font-size-12 float-right">
                                 <li class="d-inline ml-2"><a href="#" class="text-primary">共<i
                                         th:text="${map.letterCount}">5</i>条会话</a>
