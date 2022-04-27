@@ -44,4 +44,9 @@ public class IndexController {
         model.addAttribute("discussPosts", arrayList);
         return "index";
     }
+
+    @RequestMapping(path = "/error", method = RequestMethod.GET)
+    public String getErrorPage() {
+        return "/error/500";
+    }
 }
