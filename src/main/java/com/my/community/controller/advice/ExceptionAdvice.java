@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+//声明通知类型为controller,可以传一个controller也可以传多个
 @ControllerAdvice(annotations = Controller.class)
 public class ExceptionAdvice {
 
