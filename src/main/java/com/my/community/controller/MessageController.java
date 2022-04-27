@@ -135,7 +135,6 @@ public class MessageController {
     @RequestMapping(path = "/letter/send", method = RequestMethod.POST)
     @ResponseBody
     public String sendLetter(String toName, String content) {
-        Integer.valueOf("abc");
         User target = userService.findUserByUsername(toName);
         if (target == null) {
             return CommunityUtils.getJSONString(1, "用户不存在!");
