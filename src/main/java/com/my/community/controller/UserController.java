@@ -74,7 +74,7 @@ public class UserController {
         //确定文件存放的路径
         File file = new File(uploadPath + "/" + filename);
         try {
-            //将用户上传的文件写入到file中
+            //将接收到的用户头像转移到给定的目标文件file
             headerImage.transferTo(file);
         } catch (IOException e) {
             log.error("上传文件失败:" + e.getMessage());

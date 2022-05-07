@@ -19,9 +19,9 @@ import java.util.Map;
 @Controller
 public class IndexController {
     @Autowired
-    DiscussPostMapper discussPostMapper;
+    private DiscussPostMapper discussPostMapper;
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String index(Model model, Page page) {
