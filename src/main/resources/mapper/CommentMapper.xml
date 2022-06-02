@@ -11,12 +11,12 @@
     </sql>
 
     <insert id="insertComment" parameterType="Comment" keyProperty="id">
-        insert into comment (<include refid="insertFields"></include>) values (#{userId}, #{entityType}, #{entityId},
+        insert into comment (<include refid="insertFields"/>) values (#{userId}, #{entityType}, #{entityId},
         #{targetId}, #{content}, #{status}, #{createTime})
     </insert>
     <select id="selectCommentByEntity" resultType="Comment">
         select
-        <include refid="selectFields"></include>
+        <include refid="selectFields"/>
         from comment where status = 0 and entity_type = #{entityType} and entity_id =#{entityId} order by create_time
         asc limit
         #{offset},#{limit}

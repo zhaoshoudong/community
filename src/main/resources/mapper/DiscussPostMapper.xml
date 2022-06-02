@@ -14,8 +14,7 @@
     </update>
     <select id="findDiscussPosts" resultType="DiscussPost">
         select
-        <include refid="selectDiscuss"></include>
-        from
+        <include refid="selectDiscuss"/>
         discuss_post
         where status!=2
         <if test="userId!=0">
