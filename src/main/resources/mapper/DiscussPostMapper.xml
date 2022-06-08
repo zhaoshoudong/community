@@ -10,12 +10,14 @@
         values (null, #{userId}, #{title}, #{content}, #{type}, #{status}, #{createTime}, #{commentCount}, #{score})
     </insert>
     <update id="updateCommentCount">
-        update discuss_post set comment_count = #{commentCount} where id = #{id}
+        update discuss_post
+        set comment_count = #{commentCount}
+        where id = #{id}
     </update>
     <select id="findDiscussPosts" resultType="DiscussPost">
         select
         <include refid="selectDiscuss"/>
-        discuss_post
+        from discuss_post
         where status!=2
         <if test="userId!=0">
             and user_id = #{userId}
